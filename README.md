@@ -1,9 +1,6 @@
-# cpp
 ### c++
 
-
-
-## 1. c++基础语法
+# 1. c++基础语法
 
 ### 1.1 符号常量    #define 标识符(名称) 常量
 
@@ -186,15 +183,6 @@ cout.width(5);//设置显示的最大宽度
 |  F   |       float        |
 |  D   |       double       |
 
-### 3.4  to_string   字符串拼接
-
-~~~c++
-string name = "小黑";
-int age = 21;
-double height = 174.50;
-string msg = "我是:" + name + ",身高：" + to_string(height) + "cm,年龄：" + to_string(age) + "岁。";
-~~~
-
 ### 3.5  cin 数据输入
 
 ~~~c
@@ -237,7 +225,60 @@ static int a = 10;
 
 
 
+# 3.string字符串
 
+### 3.4.1  to_string   字符串拼接
+
+~~~c++
+string name = "小黑";
+int age = 21;
+double height = 174.50;
+string msg = "我是:" + name + ",身高：" + to_string(height) + "cm,年龄：" + to_string(age) + "岁。";
+~~~
+
+### 3.2 getline 自定义字符串输入
+
+~~~c++
+// 读取直到换行符（默认）
+std::istream& getline(std::istream& is, std::string& str);
+
+// 读取直到指定的分隔符
+std::istream& getline(std::istream& is, std::string& str, char delim);
+~~~
+
+### 3.3 size 字符串长度
+
+一个中文占3个字符
+
+### 3.4 迭代器iterator（类似数组下标）
+
+可以大小比较，或++ --。
+
+begin() 返回字符串第一个字符
+
+end() 返回字符串最后一个字符下一位置
+
+~~~c++
+for(string::iterator t = a1.begin();t <= a1.end()-1;t++){
+        cout<< *t ;
+    }
+~~~
+
+### 3.5 push_back() 尾插插入z字符串
+
+~~~c+
+a1.push_back('a');
+~~~
+
+### 3.6 pop_back() 删除尾部一个字符
+
+### 3.7 insert(a,b,c) a位置前插入b个c字符,b可省略
+
+### 3.7 find函数
+
+找到返回第一次下标出现的位置
+
+未找到:npos
 
 # 4.数组
 
@@ -284,11 +325,9 @@ int &s = a;
 const int &s = 15;
 ~~~
 
-
-
 # 6.指针
 
-## 6.1 nullptr 空指针 
+## 6.1 nullptr 空指针
 
 ~~~c
 int *p = nullptr
@@ -324,8 +363,6 @@ int* const p =地址; 值可修改，指针不可修改
 const int* const p =地址; 存储的值和指针的指向，均不可修改
 ~~~
 
-
-
 # 7.动态内存管理
 
 ## 7.1  new  分配内存并提供内存地址
@@ -354,7 +391,7 @@ struct 结构体类型{
 ## 8.2 结构体数组
 
 ~~~c++
-typedef struct Stu{
+typedef 55struct Stu{
     int num;
     int age;
 }ST;
@@ -780,6 +817,7 @@ public:
     GoodGay();
     void visit01();
 };
+
 class Building{
     friend void GoodGay::visit01();
 public:
@@ -816,8 +854,6 @@ Person p3;  // 直接在外层构造
 p3.m_a = p1.m_a + p2.m_a;
 p3.m_b = p1.m_b + p2.m_b;
 ~~~
-
-
 
 - 本质 s1.operator+(s2)   ||    operator+(s1,s2)  ==  s1 + s2
 
@@ -1060,6 +1096,8 @@ class SheepTuo:public Sheep,public Tuo{};
 
 **一个接口有多种形态-多态**
 
+对子类释放内存需要写虚析构
+
 **满足关系**
 
 - 有继承关系
@@ -1138,8 +1176,9 @@ virtual void prt() = 0;
 ## 10.7.2虚析构和纯虚析构
 
 - 用来解决父类释放子类对象
-- 子类没有**堆区数据**，可以不写虚析构或纯虚析构
+- 如果子类没有**堆区数据**，可以不写虚析构或纯虚析构
 - 使用`纯虚析构`该类属于抽象类，无法实例化对象
+- 纯虚析构需在类外实现
 
 ~~~c
 //虚析构
@@ -1182,6 +1221,10 @@ Animal::~Animal(){ //实现
 }
 
 ~~~
+
+
+
+
 
 # 5.文件操作
 
@@ -1244,8 +1287,6 @@ ifstream ifs;
 
 ### 5.2.1 写文件 `ofstream`
 
-
-
 二进制方式写文件:  `ios::binary | ios::out`
 
 ~~~c
@@ -1282,4 +1323,357 @@ public:
     cout<< p1.m_name << p1.age <<endl;
     ofs.close();
 ~~~
+
+### 5.2.3 文件是否存在  `文件对象名.is_open()`
+
+### 5.2.4 清空文件
+
+写文件，打开后直接关闭
+
+~~~c
+ofstream ofs(“文件地址”,ios::out);
+ofs.close();
+~~~
+
+### 5.2.5 文件是否为空 `文件对象名.eof()`
+
+
+
+# 6.模版
+
+**范形编程** --- 实现思想主要技术就是模版
+
+如果重名，优先调用普通函数
+
+## 6.1函数模版 
+
+- Typename 可以替换成class
+
+~~~c
+template<typename T>
+函数声明或定义应用:
+~~~
+
+- 能自动类型推导 (不会自动类型转换)
+- 显示指定类型 (会自动类型转换)
+
+~~~cpp
+func <int>(a,b);//a:cahr b:int
+~~~
+
+### 6.1.1调用规则
+
+优先调用普通函数，可以使用空模版参数列表强制优先调用函数模版
+
+~~~c
+// 通用模板
+template<class T> bool Compare(T& a, T& b){
+    if (a == b)
+        return true;
+    return false;
+}
+//具体化模版
+template<> bool Compare(Person& a1,Person& a2){
+    if (a1.m_name == a2.m_name && a1.m_ang == a2.m_ang)
+        return true;
+    else
+        return false;
+}
+~~~
+
+### 6.1.2模版特化
+
+优先调用已定义的数据
+
+~~~c
+template<class T>
+int myCompare(T T1,T T2){
+    if(T1 == T2)
+        return 1;
+    return 0;
+}
+template<> int myCompare(Person T1,Person T2){
+    if (T1.a == T2.a && T1.b == T2.b){
+        return 1;
+    }
+    return 0;
+}
+//调用myCompare(p1,p2)  <-- Person p1,p2;
+~~~
+
+
+
+## 6.2 类模版 
+
+- ==不会自动类型推倒==，只能显示指定类型
+- 可以有默认参数
+
+~~~c
+template<class type1, class type2 = int>//带默参数，调用可以省略
+template<class type1, class type2> //不带有默认参数
+class Person{
+  pubilc:
+  	type1 m_name;
+  	type2 m_age;
+  	Person(type1 f,type2 s):m_name(f), m_age(s) {}//有参构造
+}
+//函数声明或定义应用:
+~~~
+
+### 6.2.1 类模版成员函数创建时机
+
+- 成员函数调用时候才创建
+
+~~~c
+class Person1{
+public:
+    void showPerson1(){
+        cout << "Person1 show" <<endl;
+    }
+};
+class Person2{
+public:
+    void showPerson2(){
+        cout << "Person2 show" <<endl;
+    }
+};
+
+template<class T>
+class MyClass{
+public:
+    T obj;
+    void func1(){
+        obj.showPerson1();
+    }
+    void func2(){
+        obj.showPerson2();
+    }
+}; //调用时候传入哪个类参数调用哪个类下的成员函数
+~~~
+
+### 6.2.2类模版对象作函数参数 
+
+- Typeid(类名字).name() 可以输出类型名
+
+~~~c
+void func(Person<string, int>& p1);  //*指定传入类型
+
+template <clase T1,class T2>				 //参数模版化
+void func(Person<T1, T2>& p1);
+
+template <class T>									//整个类模板化
+void func(T& p1);
+~~~
+
+
+
+### 6.2.3类模版与继承
+
+~~~c
+template<class T>
+class Person{
+public:
+    T m_a;
+};
+template<class T1,class T2>		
+class One:public Person<T1>{  //T1 =string T2=int
+public:
+    T2 m_b;
+};										//调用 One<string , int> p1;
+~~~
+
+### 6.2.4 类模版类外实现
+
+~~~c
+template<class T1,class T2>
+class Person{
+public:
+    T1 m_ang;
+    T2 m_name;
+    void func();
+};
+
+template<class T1,class T2> //类模版类外实现
+void Person<T1, T2>::func() {
+    cout<< "hello" <<endl;
+}
+~~~
+
+成员函数调用
+
+**类模版分文件编写 .hpp**
+
+- 将类模版与类模版类外实现写一起，后缀改为hpp
+
+### 6.2.5类模版与友元
+
+- 空模板参数列表
+
+~~~c
+//类内实现
+template<class T1,class T2>
+class Person{
+    friend void printPerson(Person<T1,T2>& p){ //类内友元
+      cout<< p.m_name << p.m_age <<endl;
+    }
+public:
+    T1 m_name;
+    T2 m_age;
+    Person(T1 name, T2 age):m_name(name), m_age(age){}
+};
+//类外实现
+template<class T1,class T2>
+class Person;
+template<class T1,class T2>
+void printPerson(Person<T1,T2>& p){ //类外友元
+    cout<< p.m_name << p.m_age <<endl;
+}
+
+template<class T1,class T2>
+class Person{
+    friend void printPerson<>(Person<T1,T2>& p);
+private:
+    T1 m_name;
+    T2 m_age;
+public:
+    Person(T1 name, T2 age):m_name(name), m_age(age){}
+};
+~~~
+
+
+
+在模版类中返回*this的时 函数返回值 --> 对象名& 不用像调用时候 对象名<T>
+
+# 7.STL
+
+stabdard  标准模版库
+
+容器 算法(Algorithms) 迭代器
+
+几乎所有STL代码都采用模版类或模版函数
+
+
+
+## 7.1 STL六大组件
+
+容器  算法  迭代器 仿函数  适配器(配接器)  空间配置器
+
+
+
+- 容器  vector、list、deque、set、map  (数据结构)
+- 算法  sort、find、copy、for_each  (算法，排序、查找..)
+- 迭代器 容器算法之间胶合
+- 仿函数 行为函数，作为算法的某种策略
+- 适配器 一种用来修饰容器或仿函数或迭代器接口的东西
+- 空间配置器 负责空间的配置与管理
+
+
+
+### 7.1.1 容器，算法，迭代器
+
+**容器**
+
+序列式容器 -- 存储元素的序列，允许双向遍历。
+
+关联式容器 -- 存储键值对，每个元素都有一个键（key）和一个值（value），并且通过键来组织元素。
+
+无序容器  -- 哈希表，支持快速的查找、插入和删除
+
+**算法** Algorithms
+
+STL 提供了大量的算法，用于对容器中的元素进行各种操作，包括排序、搜索、复制、移动、变换等。这些算法在使用时不需要关心容器的具体类型，只需要指定要操作的范围即可。
+
+**迭代器** iterator
+
+遍历容器中的元素，允许以统一的方式访问容器中的元素，而不用关心容器的内部实现细节。STL 提供了多种类型的迭代器，包括随机访问迭代器、双向迭代器、前向迭代器和输入输出迭代器等。
+
+
+
+
+
+
+
+~~~c++
+~~~
+
+
+
+
+
+类似于指针
+
+| 种类           | 功能                     | 支持 |
+| -------------- | ------------------------ | ---- |
+| 输入迭代器     |                          | 只读 |
+| 输出迭代器     |                          | 只写 |
+| 前向迭代器     |                          | 读写 |
+| 双向迭代器     |                          | 读写 |
+| 随机访问迭代器 | 读写，可以跳跃的方式访问 | 读写 |
+
+## 7.2 容器
+
+### 序列容器
+
+1. std::vector 动态顺序表，支持快速随机访问。
+
+    - size -- 返回有效元素
+    - 名称[n] --支持下标访问，类似数组
+    - empty --返回是否为空
+    - begin / end --迭代器，遍历使用，可以++或--。左闭右开，
+    - push_back / pop_back 尾插，尾删
+    - front / back 返回首元素，返回尾元素
+    - resize
+    - clear
+
+    ~~~c++
+    vector<int> a1;
+    vector<int> a2(10);
+    vector<int> a3(10,3);
+    vector<string> a;
+    vector<vector<int>> c;
+    vector<int> a5[8];
+    cout<<  a2.size() << endl;
+    
+    函数调用时 -传递引用
+    void print(vector<int>& a){}
+    使用迭代器访问值
+        vector<int>::iterator v = vec.begin(); //可以使用auto替换vector<int>::iterator
+       while( v != vec.end()) {
+          cout << "value of v = " << *v << endl;
+          v++;
+       }
+    
+    ~~~
+
+2. std::list  链表，支持快速插入和删除，但不支持随机访问。
+
+~~~c++
+ 
+~~~
+
+
+
+3. std::deque  双端队列，支持快速插入和删除。
+
+### 关联容器
+
+1. std::set  集合，不允许重复元素。
+
+2. std::multiset  多重集合，允许多个元素具有相同的键。
+
+3. std::map  映射，每个键映射到一个值。
+
+4. std::multimap  多重映射，存储了键值对（pair），其中键是唯一的，但值可以重复，允许一个键映射到多个值
+
+### 无序容器
+
+std::unordered_set  无序集合。
+
+std::unordered_multiset  无序多重集合。
+
+std::unordered_map  无序映射。
+
+std::unordered_multimap  无序多重映射。
+
+
 
