@@ -1980,3 +1980,19 @@ int main() {
 }
 ~~~
 
+子集
+
+~~~c++
+vector<vector<int>> my_std(vector<int>& arr){
+    vector<vector<int>> num;
+
+    for (int i = 0; i < (1<<arr.size()); ++i) {
+        vector<int> temp;
+        for (int j = 0; j < arr.size(); ++j) {
+            if ((i >> j) & 1) temp.push_back(arr[j]);
+        }
+        num.push_back(temp);
+    }
+    return num;
+}
+~~~
